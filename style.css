@@ -1,0 +1,315 @@
+:root {
+    --primary-color: #ff2a54;
+    /* Red accent matching Valorant vibe */
+    --secondary-color: #0f1923;
+    /* Dark futuristic background color base */
+    --text-glow: rgba(255, 42, 84, 0.6);
+    --cyan-glow: #00ffff;
+    --white: #ffffff;
+    --font-heading: 'Orbitron', sans-serif;
+    --font-body: 'Rajdhani', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    font-family: var(--font-body);
+    overflow: hidden;
+    /* Keep page fixed, no scroll since it's a full-screen landing page */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('assets/BG.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -2;
+    transition: transform 0.1s ease-out;
+}
+
+.background-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, transparent 0%, rgba(15, 25, 35, 0.30) 100%);
+    z-index: -1;
+}
+
+/* Header layout */
+.header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.college-logo {
+    height: 90px;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.college-logo:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.7));
+}
+
+.game-logo {
+    height: 40px;
+    object-fit: contain;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.valorant-logo {
+    filter: drop-shadow(0 0 10px rgba(255, 42, 84, 0.4));
+}
+
+.bgmi-logo {
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+.game-logo:hover {
+    transform: scale(1.1) translateY(-5px);
+}
+
+.valorant-logo:hover {
+    filter: drop-shadow(0 0 25px rgba(255, 42, 84, 0.9));
+}
+
+.bgmi-logo:hover {
+    filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.8));
+}
+
+/* Main content */
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 5;
+    padding: 0 2rem;
+}
+
+.content-wrapper {
+    animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.subtitle {
+    font-size: 1.8rem;
+    letter-spacing: 6px;
+    background: linear-gradient(to right, #6e6e6e 0%, #d4d4d4 25%, #ffffff 50%, #d4d4d4 75%, #6e6e6e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+
+.main-title {
+    font-family: var(--font-heading);
+    font-size: 7rem;
+    font-weight: 900;
+    letter-spacing: 15px;
+    text-transform: uppercase;
+    background: linear-gradient(to right, #4a4a4a 0%, #c0c0c0 20%, #ffffff 50%, #c0c0c0 80%, #4a4a4a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 2rem;
+    position: relative;
+    display: inline-block;
+}
+
+
+
+.decorative-line {
+    width: 80px;
+    height: 4px;
+    background-color: var(--primary-color);
+    margin: 0 auto 2rem auto;
+    border-radius: 2px;
+    box-shadow: 0 0 15px var(--primary-color);
+}
+
+.description {
+    font-size: 1.4rem;
+    max-width: 600px;
+    margin: 0 auto 3rem auto;
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+
+/* High-tech Button */
+.notify-btn {
+    position: relative;
+    padding: 16px 48px;
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--white);
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 700;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    clip-path: polygon(15% 0, 100% 0, 100% 65%, 85% 100%, 0 100%, 0 35%);
+}
+
+.notify-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--primary-color);
+    z-index: -1;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.notify-btn:hover::before {
+    transform: scaleX(1);
+}
+
+.notify-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Floating animation for logos */
+@keyframes hover-float {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.game-logo {
+    animation: hover-float 4s ease-in-out infinite;
+}
+
+.game-logo:nth-child(2) {
+    animation-delay: 2s;
+    /* offset the second logo */
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .main-title {
+        font-size: 5.5rem;
+        letter-spacing: 12px;
+    }
+}
+
+@media (max-width: 900px) {
+    .header {
+        padding: 1.5rem 2rem;
+    }
+
+    .college-logo {
+        height: 70px;
+    }
+
+    .game-logo {
+        height: 50px;
+    }
+
+    .main-title {
+        font-size: 4rem;
+        letter-spacing: 8px;
+    }
+
+    .subtitle {
+        font-size: 1.4rem;
+        letter-spacing: 4px;
+    }
+
+    .description {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        overflow-y: auto;
+        /* Allow scrolling on very small heights */
+    }
+
+    .header {
+        position: relative;
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1.5rem;
+        background: radial-gradient(circle at top, rgba(15, 25, 35, 0.5) 0%, transparent 100%);
+    }
+
+    .main-content {
+        padding: 2rem 1rem;
+    }
+
+    .main-title {
+        font-size: 3rem;
+        letter-spacing: 5px;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+        letter-spacing: 2px;
+    }
+
+    .description {
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
+
+    .notify-btn {
+        padding: 12px 32px;
+        font-size: 1.1rem;
+    }
+}
