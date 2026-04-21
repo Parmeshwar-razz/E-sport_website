@@ -52,6 +52,52 @@ body {
     z-index: -1;
 }
 
+/* Character background images */
+.char-bg {
+    position: fixed;
+    bottom: 0;
+    height: 85vh;
+    opacity: 0.18;
+    z-index: 1;
+    pointer-events: none;
+    object-fit: contain;
+}
+
+.char-left {
+    left: -2%;
+    transform-origin: bottom left;
+}
+
+.char-right {
+    right: -2%;
+    transform-origin: bottom right;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+    .char-bg {
+        height: 60vh;
+        opacity: 0.15;
+    }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .char-bg {
+        height: 42vh;
+        opacity: 0.12;
+    }
+
+    .char-left {
+        left: -5%;
+    }
+
+    .char-right {
+        right: -5%;
+    }
+}
+
+
 /* Header layout */
 .header {
     position: absolute;
