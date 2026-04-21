@@ -84,8 +84,9 @@ body {
 /* Mobile */
 @media (max-width: 600px) {
     .char-bg {
-        height: 42vh;
-        opacity: 0.12;
+        height: 45vh;
+        opacity: 0.28;
+        bottom: 5%;
     }
 
     .char-left {
@@ -323,39 +324,60 @@ body {
 
 @media (max-width: 600px) {
     body {
-        overflow-y: auto;
-        /* Allow scrolling on very small heights */
+        overflow: hidden;
     }
 
     .header {
-        position: relative;
+        position: absolute;
         flex-direction: column;
-        gap: 1.5rem;
-        padding: 1.5rem;
-        background: radial-gradient(circle at top, rgba(15, 25, 35, 0.5) 0%, transparent 100%);
+        gap: 0.6rem;
+        padding: 1rem 1.2rem;
+    }
+
+    .college-logo {
+        height: 55px;
+    }
+
+    .game-logo {
+        height: 38px;
+    }
+
+    .logo-container.top-right {
+        gap: 1rem;
     }
 
     .main-content {
-        padding: 2rem 1rem;
-    }
-
-    .main-title {
-        font-size: 3rem;
-        letter-spacing: 5px;
-    }
-
-    .subtitle {
-        font-size: 1.1rem;
-        letter-spacing: 2px;
-    }
-
-    .description {
-        font-size: 1rem;
         padding: 0 1rem;
     }
 
+    .content-wrapper {
+        margin-top: 3rem;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
+        letter-spacing: 2px;
+        margin-bottom: 0.6rem;
+    }
+
+    .main-title {
+        font-size: 2.6rem;
+        letter-spacing: 4px;
+        margin-bottom: 1rem;
+    }
+
+    .decorative-line {
+        margin-bottom: 1rem;
+    }
+
+    .description {
+        font-size: 0.95rem;
+        padding: 0 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+
     .notify-btn {
-        padding: 12px 32px;
-        font-size: 1.1rem;
+        padding: 12px 28px;
+        font-size: 1rem;
     }
 }
