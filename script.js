@@ -23,19 +23,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (hamburger && mobileNav) {
+        const mobileNavClose = document.getElementById('mobileNavClose');
+        const backdrop = document.getElementById('mobileNavBackdrop');
+
+        function closeNav() {
+            hamburger.classList.remove('active');
+            mobileNav.classList.remove('open');
+            if (backdrop) backdrop.classList.remove('visible');
+            document.body.style.overflow = '';
+        }
+
         hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            mobileNav.classList.toggle('open');
-            document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+            const isOpen = mobileNav.classList.contains('open');
+            if (isOpen) {
+                closeNav();
+            } else {
+                hamburger.classList.add('active');
+                mobileNav.classList.add('open');
+                if (backdrop) backdrop.classList.add('visible');
+                document.body.style.overflow = 'hidden';
+            }
         });
 
-        // Close mobile nav on link click
+        // Close button inside nav
+        if (mobileNavClose) {
+            mobileNavClose.addEventListener('click', closeNav);
+        }
+
+        // Tap backdrop to close
+        if (backdrop) {
+            backdrop.addEventListener('click', closeNav);
+        }
+
+        // Close on nav link click
         mobileNav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                mobileNav.classList.remove('open');
-                document.body.style.overflow = '';
-            });
+            link.addEventListener('click', closeNav);
         });
     }
 

@@ -262,6 +262,61 @@ ul {
     padding: 10px 30px;
 }
 
+/* Close button inside mobile nav */
+.mobile-nav-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0;
+    z-index: 110;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.mobile-nav-close:hover {
+    background: rgba(255, 42, 84, 0.2);
+    border-color: var(--primary-color);
+    transform: rotate(90deg);
+}
+
+.mobile-nav-close span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--text-main);
+    border-radius: 2px;
+    position: absolute;
+}
+
+.mobile-nav-close span:nth-child(1) { transform: rotate(45deg); }
+.mobile-nav-close span:nth-child(2) { transform: rotate(-45deg); }
+
+/* Backdrop overlay */
+.mobile-nav-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 98;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(2px);
+}
+
+.mobile-nav-backdrop.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
 
 /* ================== HERO ================== */
 .hero-section {
