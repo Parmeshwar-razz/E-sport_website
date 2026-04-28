@@ -364,8 +364,7 @@ ul {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 20px;
-    padding-top: 80px;
+    padding: 140px 20px 80px;
     animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -405,7 +404,7 @@ ul {
 
 @keyframes float {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
+    50% { transform: translateY(-8px); }
 }
 
 .hero-game-logos {
@@ -671,22 +670,12 @@ ul {
 }
 
 .game-card-glow {
-    position: absolute;
-    top: -50%; left: -50%;
-    width: 200%; height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s;
+    display: none;
 }
 
 .game-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-4px);
     z-index: 10;
-}
-
-.game-card:hover .game-card-glow {
-    opacity: 1;
 }
 
 .game-card-top {
@@ -776,27 +765,33 @@ ul {
     transition: background 0.3s, color 0.3s;
 }
 
-/* Theme Specifics */
-.bgmi-theme .game-card-top { background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mO88/TzfxgAIA8C0/oV+aUAAAAASUVORK5CYII='); } /* Orange tint */
+/* Theme Specifics — same dark card, game-colored glow behind logo & button */
+.bgmi-theme .game-card-top {
+    background: #0d1117;
+}
 .bgmi-theme .game-card-name { color: #f59e0b; }
 .bgmi-theme .game-specs li i { color: #f59e0b; }
 .bgmi-theme .game-card-btn { background: rgba(245, 158, 11, 0.1); color: #f59e0b; border-top: 1px solid rgba(245, 158, 11, 0.2); }
 .bgmi-theme:hover .game-card-btn { background: #f59e0b; color: #000; }
-.bgmi-theme:hover { box-shadow: 0 10px 30px rgba(245, 158, 11, 0.2); border-color: rgba(245, 158, 11, 0.5); }
+.bgmi-theme:hover { box-shadow: 0 6px 20px rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); }
 
-.valo-theme .game-card-top { background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=='); } /* Red tint */
+.valo-theme .game-card-top {
+    background: #0d1117;
+}
 .valo-theme .game-card-name { color: var(--primary-color); }
 .valo-theme .game-specs li i { color: var(--primary-color); }
 .valo-theme .game-card-btn { background: rgba(255, 42, 84, 0.1); color: var(--primary-color); border-top: 1px solid rgba(255, 42, 84, 0.2); }
 .valo-theme:hover .game-card-btn { background: var(--primary-color); color: #fff; }
-.valo-theme:hover { box-shadow: 0 10px 30px var(--primary-glow); border-color: rgba(255, 42, 84, 0.5); }
+.valo-theme:hover { box-shadow: 0 6px 20px rgba(255, 42, 84, 0.1); border-color: rgba(255, 42, 84, 0.3); }
 
-.mlbb-theme .game-card-top { background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=='); } /* Blue tint */
+.mlbb-theme .game-card-top {
+    background: #0d1117;
+}
 .mlbb-theme .game-card-name { color: #3b82f6; }
 .mlbb-theme .game-specs li i { color: #3b82f6; }
 .mlbb-theme .game-card-btn { background: rgba(59, 130, 246, 0.1); color: #3b82f6; border-top: 1px solid rgba(59, 130, 246, 0.2); }
 .mlbb-theme:hover .game-card-btn { background: #3b82f6; color: #fff; }
-.mlbb-theme:hover { box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2); border-color: rgba(59, 130, 246, 0.5); }
+.mlbb-theme:hover { box-shadow: 0 6px 20px rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.3); }
 
 
 /* ================== PRIZE POOL ================== */
@@ -893,13 +888,7 @@ ul {
 }
 
 .prize-glow {
-    position: absolute;
-    top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 100px; height: 100px;
-    filter: blur(40px);
-    opacity: 0.5;
-    z-index: 1;
+    display: none;
 }
 
 .prize-medal {
@@ -1779,8 +1768,14 @@ ul {
 }
 
 .success-icon {
-    font-size: 5rem;
     margin-bottom: 20px;
+}
+
+.success-tournament-logo {
+    height: 140px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 20px rgba(255, 42, 84, 0.4));
+    animation: float 4s ease-in-out infinite;
 }
 
 .success-screen h2 {

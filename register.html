@@ -4,10 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Register your team for Biyani Inter-College Esports Championship 2026 — BGMI, Valorant & MLBB">
+    <meta name="description"
+        content="Register your team for Biyani Inter-College Esports Championship 2026 — BGMI, Valorant & MLBB">
     <title>Team Registration — Biyani Esports Championship 2026</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
@@ -28,6 +31,7 @@
                 <div class="nav-game-logos">
                     <img src="assets/BGMI.png" alt="BGMI">
                     <img src="assets/valorant.png" alt="Valorant">
+                    <img src="assets/Moba_Legends_5v5_logo.png" alt="Valorant">
                 </div>
             </div>
         </div>
@@ -42,15 +46,18 @@
 
             <!-- Header -->
             <div class="reg-header">
-                <img src="assets/Tournament logo.png" alt="Biyani Esports Championship" class="reg-tournament-logo" onerror="this.style.display='none'">
+                <img src="assets/Tournament logo.png" alt="Biyani Esports Championship" class="reg-tournament-logo"
+                    onerror="this.style.display='none'">
                 <h1 class="reg-title">TEAM <span class="highlight">REGISTRATION</span></h1>
-                <p class="reg-subtitle">Fill in your squad details below to secure your spot in the tournament. Deadline: 3rd May 2026.</p>
+                <p class="reg-subtitle">Fill in your squad details below to secure your spot in the tournament.
+                    <span style="color: var(--primary-color); font-weight: 700; letter-spacing: 0.5px;">⏰ Deadline: 3rd May 2026</span></p>
                 <div class="reg-event-chip"><i class="fas fa-calendar-alt"></i> Event Date: 4th May 2026</div>
             </div>
 
             <!-- Game Selector -->
             <div class="game-selector-block">
-                <h3 class="game-selector-title"><i class="fas fa-gamepad"></i> SELECT YOUR GAME <span class="req">*</span></h3>
+                <h3 class="game-selector-title"><i class="fas fa-gamepad"></i> SELECT YOUR GAME <span
+                        class="req">*</span></h3>
                 <div class="game-selector-row" id="gameSelectorRow">
                     <label class="game-sel-option" id="sel-bgmi">
                         <input type="radio" name="game_selected" value="BGMI" checked>
@@ -69,7 +76,7 @@
                     <label class="game-sel-option" id="sel-mlbb">
                         <input type="radio" name="game_selected" value="MLBB">
                         <div class="game-sel-inner">
-                            <span class="game-sel-emoji">⚔️</span>
+                            <img src="assets/Moba_Legends_5v5_logo.png" alt="Valorant">
                             <span>Mobile Legends</span>
                         </div>
                     </label>
@@ -102,7 +109,7 @@
                             <label for="captainName">Team Captain Name <span class="req">*</span></label>
                             <input type="text" id="captainName" placeholder="Full name of the team captain" required>
                         </div>
-                        <div class="form-group full-width">
+                        <!-- <div class="form-group full-width">
                             <label>Team Logo <span class="opt-tag">(Optional)</span></label>
                             <div class="file-drop-zone" id="fileDropZone">
                                 <input type="file" id="teamLogo" accept="image/*" hidden>
@@ -113,10 +120,11 @@
                                 </div>
                                 <div class="logo-preview-box" id="logoPreviewBox" style="display:none;">
                                     <img id="logoPreviewImg" src="" alt="Logo Preview">
-                                    <button type="button" id="removeLogo" class="remove-logo-btn"><i class="fas fa-times"></i></button>
+                                    <button type="button" id="removeLogo" class="remove-logo-btn"><i
+                                            class="fas fa-times"></i></button>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
@@ -144,7 +152,9 @@
                         <i class="fas fa-gamepad"></i>
                         <h3>Player Details</h3>
                     </div>
-                    <p class="form-note"><i class="fas fa-info-circle"></i> <span id="playerNoteText">Players 1–4 are <strong>compulsory</strong>. Player 5 is a <strong>Substitute</strong> (optional).</span></p>
+                    <p class="form-note"><i class="fas fa-info-circle"></i> <span id="playerNoteText">Players 1–4 are
+                            <strong>compulsory</strong>. Player 5 is a <strong>Substitute</strong> (optional).</span>
+                    </p>
 
                     <!-- Player 1 -->
                     <div class="player-block required-player">
@@ -163,7 +173,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="p1CharID">Character ID <span class="req">*</span></label>
-                                <input type="text" id="p1CharID" placeholder="Game Character / UID" required>
+                                <input type="text" id="p1CharID" placeholder="Numbers only e.g. 512345678" inputmode="numeric" pattern="[0-9]+" required>
                             </div>
                             <div class="form-group">
                                 <label for="p1CollegeID">College ID Image <span class="req">*</span></label>
@@ -189,7 +199,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="p2CharID">Character ID <span class="req">*</span></label>
-                                <input type="text" id="p2CharID" placeholder="Game Character / UID" required>
+                                <input type="text" id="p2CharID" placeholder="Numbers only e.g. 512345678" inputmode="numeric" pattern="[0-9]+" required>
                             </div>
                             <div class="form-group">
                                 <label for="p2CollegeID">College ID Image <span class="req">*</span></label>
@@ -215,7 +225,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="p3CharID">Character ID <span class="req">*</span></label>
-                                <input type="text" id="p3CharID" placeholder="Game Character / UID" required>
+                                <input type="text" id="p3CharID" placeholder="Numbers only e.g. 512345678" inputmode="numeric" pattern="[0-9]+" required>
                             </div>
                             <div class="form-group">
                                 <label for="p3CollegeID">College ID Image <span class="req">*</span></label>
@@ -241,7 +251,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="p4CharID">Character ID <span class="req">*</span></label>
-                                <input type="text" id="p4CharID" placeholder="Game Character / UID" required>
+                                <input type="text" id="p4CharID" placeholder="Numbers only e.g. 512345678" inputmode="numeric" pattern="[0-9]+" required>
                             </div>
                             <div class="form-group">
                                 <label for="p4CollegeID">College ID Image <span class="req">*</span></label>
@@ -266,7 +276,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="p5CharID">Character ID</label>
-                                <input type="text" id="p5CharID" placeholder="Game Character / UID (optional)">
+                                <input type="text" id="p5CharID" placeholder="Numbers only (optional)" inputmode="numeric" pattern="[0-9]*">
                             </div>
                             <div class="form-group">
                                 <label for="p5CollegeID">College ID Image</label>
@@ -292,7 +302,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="p6CharID">Character ID</label>
-                                <input type="text" id="p6CharID" placeholder="Game Character / UID (optional)">
+                                <input type="text" id="p6CharID" placeholder="Numbers only (optional)" inputmode="numeric" pattern="[0-9]*">
                             </div>
                             <div class="form-group">
                                 <label for="p6CollegeID">College ID Image</label>
@@ -307,7 +317,9 @@
                 <div class="form-submit-block">
                     <label class="agree-label" id="agreeLabel">
                         <input type="checkbox" id="agreeRules" required>
-                        <span>I confirm all information is accurate and I agree to the tournament <a href="#" onclick="return false;">rules & eligibility criteria</a>. <span class="req">*</span></span>
+                        <span>I confirm all information is accurate and I agree to the tournament <a href="#"
+                                onclick="return false;">rules & eligibility criteria</a>. <span
+                                class="req">*</span></span>
                     </label>
                     <button type="submit" class="submit-btn" id="submitBtn">
                         <span id="submitBtnText">SUBMIT REGISTRATION</span>
@@ -320,9 +332,12 @@
 
             <!-- Success Screen (hidden by default) -->
             <div class="success-screen" id="successScreen" style="display:none;">
-                <div class="success-icon">🎮</div>
+            <div class="success-icon">
+                    <img src="assets/Tournament logo.png" alt="Biyani Esports Championship" class="success-tournament-logo" onerror="this.style.display='none'">
+                </div>
                 <h2>Registration Successful!</h2>
-                <p>Your team has been registered for the <strong>Biyani Inter-College Esports Championship 2026</strong>.</p>
+                <p>Your team has been registered for the <strong>Biyani Inter-College Esports Championship
+                        2026</strong>.</p>
                 <p>A confirmation will be sent to your email and WhatsApp within 24 hours.</p>
                 <div class="success-game-tag" id="successGameTag"></div>
                 <a href="index.html" class="success-back-btn">Back to Main Site</a>

@@ -97,6 +97,29 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
+        /* --- AUTO TIMELINE ACTIVE MARKER (updates per current date) --- */
+        function updateTimelineMarkers() {
+            const now = new Date();
+            // Event milestone dates (year, month-1, day)
+            const day4 = new Date(2026, 4, 4);  // 4 May 2026
+            const day5 = new Date(2026, 4, 5);  // 5 May 2026
+            const day7 = new Date(2026, 4, 7);  // 7 May 2026
+
+            // Determine which stage is active
+            let activeStage = 0; // 0 = 4 MAY, 1 = 5 MAY, 2 = 7 MAY
+            if (now >= day5 && now < day7) activeStage = 1;
+            else if (now >= day7) activeStage = 2;
+
+            // Update all timelines (BGMI, Valo, MLBB all have same dates)
+            document.querySelectorAll('.timeline').forEach(timeline => {
+                const markers = timeline.querySelectorAll('.tl-marker');
+                markers.forEach((marker, i) => {
+                    marker.classList.remove('active-marker');
+                    if (i === activeStage) marker.classList.add('active-marker');
+                });
+            });
+        }
+        updateTimelineMarkers();
 
         /* --- 3. SCROLL REVEAL ANIMATION --- */
         const revealElements = document.querySelectorAll('.reveal');
@@ -241,6 +264,20 @@ document.addEventListener('DOMContentLoaded', () => {
         gameRadios.forEach(radio => radio.addEventListener('change', updatePlayerFields));
         updatePlayerFields(); // Run once on load
 
+        /* --- CHARACTER ID: NUMBERS ONLY (real-time strip) --- */
+        const charIDInputs = ['p1CharID','p2CharID','p3CharID','p4CharID','p5CharID','p6CharID'];
+        charIDInputs.forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.addEventListener('input', () => {
+                const cleaned = el.value.replace(/[^0-9]/g, '');
+                if (el.value !== cleaned) el.value = cleaned;
+            });
+            el.addEventListener('keypress', (e) => {
+                if (!/[0-9]/.test(e.key)) e.preventDefault();
+            });
+        });
+
         /* --- FILE UPLOAD (MOCKUP LOGIC) --- */
         const dropZone = document.getElementById('fileDropZone');
         const fileInput = document.getElementById('teamLogo');
@@ -377,6 +414,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const gameSelected = document.querySelector('input[name="game_selected"]:checked').value;
+
+            // --- CHARACTER ID: MUST BE NUMERIC ---
+            const requiredCharIDs = ['p1CharID','p2CharID','p3CharID','p4CharID'];
+            if (gameSelected !== 'BGMI') requiredCharIDs.push('p5CharID');
+            for (const cid of requiredCharIDs) {
+                const val = document.getElementById(cid).value.trim();
+                if (val && !/^[0-9]+$/.test(val)) {
+                    showToast(`Character ID must contain numbers only! Check Player ${cid.replace('p','').replace('CharID','')}`, true);
+                    document.getElementById(cid).focus();
+                    return;
+                }
+            }
 
             // --- SUBSTITUTE PLAYER ALL-OR-NOTHING VALIDATION ---
             const subPrefix = gameSelected === 'BGMI' ? 'p5' : 'p6';
