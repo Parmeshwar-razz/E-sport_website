@@ -4,41 +4,691 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="E-sports Event Coming Soon">
-    <title>E-sports Event - Coming Soon</title>
+    <meta name="description"
+        content="Biyani Inter-College Esports Championship 2026 — The ultimate college gaming tournament featuring BGMI, Valorant & Mobile Legends Bang Bang.">
+    <title>Biyani Inter-College Esports Championship 2026</title>
     <link rel="stylesheet" href="style.css">
     <link
-        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
-    <div class="background-container"></div>
-    <img src="assets/Raze.png" alt="" class="char-bg char-left">
-    <img src="assets/4.png" alt="" class="char-bg char-right">
 
-    <header class="header">
-        <div class="logo-container top-left">
-            <img src="assets/Biyani Clg Logo(white).png" alt="Biyani College Logo" class="college-logo">
+    <!-- ===================== NAVBAR ===================== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <img src="assets/Biyani Clg Logo(white).png" alt="Biyani College" class="nav-college-logo">
+            </div>
+            <div class="nav-center" id="navCenter">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#games" class="nav-link">Games</a></li>
+                    <li><a href="#prize-pool" class="nav-link">Prizes</a></li>
+                    <li><a href="#format" class="nav-link">Format</a></li>
+                    <li><a href="assets/Admit-Card.pdf" class="nav-link">Rules</a></li>
+                    <li><a href="#faq" class="nav-link">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <a href="register.html" class="nav-register-btn" id="navRegisterBtn">
+                    <i class="fas fa-gamepad"></i>
+                    <span>REGISTER NOW</span>
+                </a>
+                <button class="hamburger" id="hamburger" aria-label="Toggle Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
         </div>
-        <div class="logo-container top-right">
-            <img src="assets/BGMI.png" alt="BGMI Logo" class="game-logo bgmi-logo">
-            <img src="assets/valorant.png" alt="Valorant Logo" class="game-logo valorant-logo">
+        <!-- Mobile Nav -->
+        <div class="mobile-nav" id="mobileNav">
+            <a href="#about">About</a>
+            <a href="#games">Games</a>
+            <a href="#prize-pool">Prizes</a>
+            <a href="#format">Format</a>
+            <a href="/assets/Admit-Card.pdf" download>Rules</a>
+            <a href="#faq">FAQ</a>
+            <a href="register.html" class="mobile-reg-btn">REGISTER NOW</a>
         </div>
-    </header>
+    </nav>
 
-    <main class="main-content">
-        <div class="content-wrapper">
-            <h2 class="subtitle glitch" data-text="THE ULTIMATE TOURNAMENT"> Biyani Inter College ESports Champion</h2>
-            <h1 class="main-title glitch" data-text="COMING SOON">COMING SOON</h1>
-            <div class="decorative-line"></div>
-            <p class="description">Victory begins here. Mobilize your squad for the Biyani Group of Colleges Esports
-                Arena.</p>
-            <button class="notify-btn" id="notifyBtn">
-                <span class="btn-text">STAY UPDATED</span>
-            </button>
+    <!-- ===================== HERO ===================== -->
+    <section id="hero" class="hero-section">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <img src="assets/Raze.png" alt="" class="char-bg char-left">
+        <img src="assets/4.png" alt="" class="char-bg char-right">
+
+        <div class="hero-content">
+            <div class="tournament-logo-wrap">
+                <img src="assets/Tournament logo.png" alt="Biyani Inter-College Esports Championship"
+                    class="tournament-logo">
+            </div>
+
+            <div class="hero-game-logos">
+                <img src="assets/BGMI.png" alt="BGMI" class="hero-game-logo">
+                <div class="hero-logo-sep"></div>
+                <img src="assets/valorant.png" alt="Valorant" class="hero-game-logo">
+                <div class="hero-logo-sep"></div>
+                <img src="assets/Moba_Legends_5v5_logo.png" alt="MOBA" class="hero-game-logo">
+
+
+            </div>
+
+            <div class="hero-meta">
+                <div class="hero-meta-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>4th May 2026</span>
+                </div>
+                <div class="hero-meta-sep">|</div>
+                <div class="hero-meta-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Biyani Group of Colleges, Jaipur</span>
+                </div>
+            </div>
+
+            <!-- Countdown -->
+            <div class="countdown-block">
+                <p class="countdown-label">REGISTRATION ENDS IN</p>
+                <div class="countdown-timer">
+                    <div class="cd-unit">
+                        <span class="cd-num" id="days">00</span>
+                        <span class="cd-lbl">DAYS</span>
+                    </div>
+                    <span class="cd-sep">:</span>
+                    <div class="cd-unit">
+                        <span class="cd-num" id="hours">00</span>
+                        <span class="cd-lbl">HOURS</span>
+                    </div>
+                    <span class="cd-sep">:</span>
+                    <div class="cd-unit">
+                        <span class="cd-num" id="minutes">00</span>
+                        <span class="cd-lbl">MINS</span>
+                    </div>
+                    <span class="cd-sep">:</span>
+                    <div class="cd-unit">
+                        <span class="cd-num" id="seconds">00</span>
+                        <span class="cd-lbl">SECS</span>
+                    </div>
+                </div>
+            </div>
+
+            <a href="register.html" class="hero-cta-btn">
+                <span>REGISTER YOUR TEAM</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
         </div>
-    </main>
+
+        <a href="#about" class="hero-scroll-hint">
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </section>
+
+    <!-- ===================== ABOUT ===================== -->
+    <!-- <section id="about" class="section about-section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">WHO WE ARE</span>
+                <h2 class="section-title">ABOUT THE <span class="highlight">CHAMPIONSHIP</span></h2>
+                <div class="title-bar"></div>
+            </div>
+            <div class="about-grid">
+                <div class="about-card reveal">
+                    <div class="about-icon-wrap">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Epic Tournament</h3>
+                    <p>The Biyani Inter-College Esports Championship is the premier gaming event bringing together the
+                        best college teams across BGMI, Valorant, and Mobile Legends Bang Bang.</p>
+                </div>
+                <div class="about-card reveal">
+                    <div class="about-icon-wrap">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Team Battle</h3>
+                    <p>Compete in squads of 4 compulsory players + 1 substitute. Register, play, and claim glory for
+                        your college against the best teams in the region.</p>
+                </div>
+                <div class="about-card reveal">
+                    <div class="about-icon-wrap">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Win Prizes</h3>
+                    <p>Exciting prizes await Champions, Runner-ups, 3rd Runner-ups, and the Most Valuable Player across
+                        all three game titles. Glory awaits!</p>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- ===================== GAMES ===================== -->
+    <section id="games" class="section games-section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">PICK YOUR BATTLEFIELD</span>
+                <h2 class="section-title">FEATURED <span class="highlight">GAMES</span></h2>
+                <div class="title-bar"></div>
+            </div>
+            <div class="games-grid">
+
+                <!-- BGMI Card -->
+                <div class="game-card bgmi-theme reveal">
+                    <div class="game-card-glow"></div>
+                    <div class="game-card-top">
+                        <img src="assets/BGMI.png" alt="BGMI" class="game-card-img">
+                    </div>
+                    <div class="game-card-body">
+                        <h3 class="game-card-name">BGMI</h3>
+                        <p class="game-card-full">Battlegrounds Mobile India</p>
+                        <ul class="game-specs">
+                            <li><i class="fas fa-users"></i> 4 Players + 1 Substitute</li>
+                            <li><i class="fas fa-mobile-alt"></i> Mobile — Battle Royale</li>
+                            <li><i class="fas fa-map"></i> TPP Mode</li>
+                        </ul>
+                    </div>
+                    <a href="register.html?game=BGMI" class="game-card-btn">Register for BGMI</a>
+                </div>
+
+                <!-- Valorant Card -->
+                <div class="game-card valo-theme reveal">
+                    <div class="game-card-glow"></div>
+                    <div class="game-card-top">
+                        <img src="assets/valorant.png" alt="Valorant" class="game-card-img">
+                    </div>
+                    <div class="game-card-body">
+                        <h3 class="game-card-name">VALORANT</h3>
+                        <p class="game-card-full">5v5 Tactical Shooter</p>
+                        <ul class="game-specs">
+                            <li><i class="fas fa-users"></i> 5 Players + 1 Substitute</li>
+                            <li><i class="fas fa-desktop"></i> PC — Tactical FPS</li>
+                            <li><i class="fas fa-crosshairs"></i> 5V5 Competitive Mode</li>
+                        </ul>
+                    </div>
+                    <a href="register.html?game=Valorant" class="game-card-btn">Register for Valorant</a>
+                </div>
+
+                <!-- MLBB Card -->
+                <div class="game-card mlbb-theme reveal">
+                    <div class="game-card-glow"></div>
+                    <div class="game-card-top">
+                         <img src="assets/Moba_Legends_5v5_logo.png" alt="Valorant" class="game-card-img">
+
+                    </div>
+                    <div class="game-card-body">
+                        <h3 class="game-card-name">MOBA LEGENDS 5V5</h3>
+                        <p class="game-card-full">Bang Bang — 5V5 MOBA</p>
+                        <ul class="game-specs">
+                            <li><i class="fas fa-users"></i> 5 Players + 1 Substitute</li>
+                            <li><i class="fas fa-mobile-alt"></i> Mobile — MOBA</li>
+                            <li><i class="fas fa-bolt"></i>5V5 Competitive Mode</li>
+                        </ul>
+                    </div>
+                    <a href="register.html?game=MLBB" class="game-card-btn">Register for MOBA LEGENDS</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== PRIZE POOL ===================== -->
+    <section id="prize-pool" class="section prize-section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">CLAIM YOUR GLORY</span>
+                <h2 class="section-title">PRIZE <span class="highlight">POOL</span></h2>
+                <div class="title-bar"></div>
+            </div>
+
+            <!-- Game Tabs -->
+            <div class="prize-tabs-bar">
+                <button class="prize-tab-btn active" data-target="prize-bgmi" id="tab-bgmi">
+                    <img src="assets/BGMI.png" alt="BGMI"> BGMI
+                </button>
+                <button class="prize-tab-btn" data-target="prize-valo" id="tab-valo">
+                    <img src="assets/valorant.png" alt="Valorant"> VALORANT
+                </button>
+                <button class="prize-tab-btn" data-target="prize-mlbb" id="tab-mlbb">
+                    <img src="assets/Moba_Legends_5v5_logo.png" alt="Moba legends">MOBA LEGENDS 5V5
+                </button>
+            </div>
+
+            <!-- BGMI Prize Tab -->
+            <div class="prize-tab-panel active" id="prize-bgmi">
+                <div style="text-align:center;">
+                    <div class="total-prize-banner">
+                        <span class="tpb-icon">🏆</span>
+                        <span class="tpb-label">TOTAL PRIZE POOL</span>
+                        <span class="tpb-amount">₹40,000</span>
+                    </div>
+                </div>
+                <div class="prize-grid">
+                    <div class="prize-card champion reveal">
+                        <div class="prize-glow"></div>
+                        <div class="prize-medal">🏆</div>
+                        <h3 class="prize-pos">CHAMPION</h3>
+                        <div class="prize-amount">₹18,000</div>
+                        <p class="prize-note">Trophy + Prize Money</p>
+                    </div>
+                    <div class="prize-card runner reveal">
+                        <div class="prize-glow"></div>
+                        <div class="prize-medal">🥈</div>
+                        <h3 class="prize-pos">RUNNER-UP</h3>
+                        <div class="prize-amount">₹10,000</div>
+                        <p class="prize-note">Prize Money</p>
+                    </div>
+                    <div class="prize-card third reveal">
+                        <div class="prize-glow"></div>
+                        <div class="prize-medal">🥉</div>
+                        <h3 class="prize-pos">3RD RUNNER-UP</h3>
+                        <div class="prize-amount">₹7,000</div>
+                        <p class="prize-note">Prize Money</p>
+                    </div>
+                    <div class="prize-card mvp reveal">
+                        <div class="prize-glow"></div>
+                        <div class="prize-medal">⭐</div>
+                        <h3 class="prize-pos">MVP</h3>
+                        <div class="prize-amount">₹5,000</div>
+                        <p class="prize-note">Trophy + Prize Money</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Valorant Prize Tab -->
+            <div class="prize-tab-panel" id="prize-valo">
+                <div style="text-align:center;">
+                    <div class="total-prize-banner">
+                        <span class="tpb-icon">🏆</span>
+                        <span class="tpb-label">TOTAL PRIZE POOL</span>
+                        <span class="tpb-amount">₹30,000</span>
+                    </div>
+                </div>
+                <div class="prize-grid">
+                    <div class="prize-card champion reveal">
+                        <div class="prize-glow"></div>
+                        <div class="prize-medal">🏆</div>
+                        <h3 class="prize-pos">CHAMPION</h3>
+                        <div class="prize-amount">₹14,000</div>
+                        <p class="prize-note">Trophy + Certificates + Cash Prize</p>
+                    </div>
+                    <div class="prize-card runner reveal">
+                        <div class="prize-glow"></div>
+                        <div class="prize-medal">🥈</div>
+                        <h3 class="prize-pos">RUNNER-UP</h3>
+                        <div class="prize-amount">₹8,000</div>
+                        <p class="prize-note">Medals + Certificates</p>
+                    </div>
+                    <div class="prize-card third reveal">
+                        <div class="prize-glow"></div>
+                        <div class="prize-medal">🥉</div>
+                        <h3 class="prize-pos">3RD RUNNER-UP</h3>
+                        <div class="prize-amount">₹5,000</div>
+                        <p class="prize-note">Medals + Certificates</p>
+                    </div>
+                    <div class="prize-card mvp reveal">
+                        <div class="prize-glow"></div>
+                        <div class="prize-medal">⭐</div>
+                        <h3 class="prize-pos">MVP</h3>
+                        <div class="prize-amount">₹3,000</div>
+                        <p class="prize-note">Most Valuable Player Award</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MLBB Prize Tab -->
+            <div class="prize-tab-panel" id="prize-mlbb">
+                <div style="text-align:center;">
+                    <div class="total-prize-banner">
+                        <span class="tpb-icon">🏆</span>
+                        <span class="tpb-label">TOTAL PRIZE POOL</span>
+                        <span class="tpb-amount">₹30,000</span>
+                    </div>
+                </div>
+                <div class="prize-grid">
+                    <div class="prize-card champion reveal">
+                        <div class="prize-glow"></div>
+                        <div class="prize-medal">🏆</div>
+                        <h3 class="prize-pos">CHAMPION</h3>
+                        <div class="prize-amount">₹14,000</div>
+                        <p class="prize-note">Trophy + Certificates + Cash Prize</p>
+                    </div>
+                    <div class="prize-card runner reveal">
+                        <div class="prize-glow"></div>
+                        <div class="prize-medal">🥈</div>
+                        <h3 class="prize-pos">RUNNER-UP</h3>
+                        <div class="prize-amount">₹8,000</div>
+                        <p class="prize-note">Medals + Certificates</p>
+                    </div>
+                    <div class="prize-card third reveal">
+                        <div class="prize-glow"></div>
+                        <div class="prize-medal">🥉</div>
+                        <h3 class="prize-pos">3RD RUNNER-UP</h3>
+                        <div class="prize-amount">₹5,000</div>
+                        <p class="prize-note">Medals + Certificates</p>
+                    </div>
+                    <div class="prize-card mvp reveal">
+                        <div class="prize-glow"></div>
+                        <div class="prize-medal">⭐</div>
+                        <h3 class="prize-pos">MVP</h3>
+                        <div class="prize-amount">₹3,000</div>
+                        <p class="prize-note">Most Valuable Player Award</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===================== FORMAT ===================== -->
+    <section id="format" class="section schedule-section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">ROAD TO GLORY</span>
+                <h2 class="section-title">TOURNAMENT <span class="highlight">FORMAT</span></h2>
+                <div class="title-bar"></div>
+            </div>
+
+            <!-- Game Tabs -->
+            <div class="prize-tabs-bar">
+                <button class="prize-tab-btn active" data-target="format-bgmi" id="tab-fmt-bgmi">
+                    <img src="assets/BGMI.png" alt="BGMI"> BGMI
+                </button>
+                <button class="prize-tab-btn" data-target="format-valo" id="tab-fmt-valo">
+                    <img src="assets/valorant.png" alt="Valorant"> VALORANT
+                </button>
+                <button class="prize-tab-btn" data-target="format-mlbb" id="tab-fmt-mlbb">
+                    <img src="assets/Moba_Legends_5v5_logo.png" alt="Moba legends"> MOBA LEGENDS 5V5
+                </button>
+            </div>
+
+            <!-- BGMI Format Tab -->
+            <div class="prize-tab-panel active" id="format-bgmi">
+                <div class="timeline">
+                    <div class="timeline-item reveal">
+                        <div class="tl-marker active-marker"></div>
+                        <div class="tl-date">4 MAY</div>
+                        <div class="tl-card">
+                            <h3>Online Qualifiers</h3>
+                            <p>Total 64 teams. 16 teams each group (4 groups). 1 match per team. Top 8 teams qualify for
+                                semi final.</p>
+                            <span class="tl-badge open">QUALIFIER</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item reveal">
+                        <div class="tl-marker"></div>
+                        <div class="tl-date">5 MAY</div>
+                        <div class="tl-card">
+                            <h3>Semi Finals</h3>
+                            <p>Top 32 teams. 8 teams in each group. Format: round robin. 2 match per team. Top 4 will
+                                qualify for grand final.</p>
+                            <span class="tl-badge upcoming">SEMI FINAL</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item reveal">
+                        <div class="tl-marker"></div>
+                        <div class="tl-date">7 MAY</div>
+                        <div class="tl-card">
+                            <h3>Grand Finals (LAN)</h3>
+                            <p>Top 16 Teams will fight for championship. Lan Event setup.</p>
+                            <span class="tl-badge upcoming">GRAND FINAL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VALORANT Format Tab -->
+            <div class="prize-tab-panel" id="format-valo">
+                <div class="timeline">
+                    <div class="timeline-item reveal">
+                        <div class="tl-marker active-marker"></div>
+                        <div class="tl-date">4 MAY</div>
+                        <div class="tl-card">
+                            <h3>Online Qualifiers</h3>
+                            <p>Total 16 teams. 1 match per team. Top 4 teams qualify for
+                                semi final.</p>
+                            <span class="tl-badge open">QUALIFIER</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item reveal">
+                        <div class="tl-marker"></div>
+                        <div class="tl-date">5 MAY</div>
+                        <div class="tl-card">
+                            <h3>Semi Finals</h3>
+                            <p>Top 4 teams. Format: B03/round robin. 2 match per team. Top 2 will
+                                qualify for grand final.</p>
+                            <span class="tl-badge upcoming">SEMI FINAL</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item reveal">
+                        <div class="tl-marker"></div>
+                        <div class="tl-date">7 MAY</div>
+                        <div class="tl-card">
+                            <h3>Grand Finals (LAN)</h3>
+                            <p>Top 2 Teams will fight for championship.</p>
+                            <span class="tl-badge upcoming">GRAND FINAL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MLBB Format Tab -->
+            <div class="prize-tab-panel" id="format-mlbb">
+                <div class="timeline">
+                    <div class="timeline-item reveal">
+                        <div class="tl-marker active-marker"></div>
+                        <div class="tl-date">4 MAY</div>
+                        <div class="tl-card">
+                            <h3>Online Qualifiers</h3>
+                            <p>Total 16 teams. 1 match per team. Top 4 teams qualify for
+                                semi final.</p>
+                            <span class="tl-badge open">QUALIFIER</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item reveal">
+                        <div class="tl-marker"></div>
+                        <div class="tl-date">5 MAY</div>
+                        <div class="tl-card">
+                            <h3>Semi Finals</h3>
+                            <p>Top 4 teams. Format: B03/round robin. 2 match per team. Top 2 will
+                                qualify for grand final.</p>
+                            <span class="tl-badge upcoming">SEMI FINAL</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item reveal">
+                        <div class="tl-marker"></div>
+                        <div class="tl-date">7 MAY</div>
+                        <div class="tl-card">
+                            <h3>Grand Finals (LAN)</h3>
+                            <p>Top 2 Teams will fight for championship.</p>
+                            <span class="tl-badge upcoming">GRAND FINAL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===================== RULES ===================== -->
+    <section id="rules" class="section rules-section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">PLAY FAIR. WIN HARD.</span>
+                <h2 class="section-title">RULES & <span class="highlight">ELIGIBILITY</span></h2>
+                <div class="title-bar"></div>
+            </div>
+            <div class="rules-grid">
+                <div class="rule-card reveal">
+                    <span class="rule-num">01</span>
+                    <h3>Eligibility</h3>
+                    <p>All participants are required to present a valid College ID card as proof. 
+                        Minumun age requires: 16 Years.</p>
+                </div>
+                <div class="rule-card reveal">
+                    <span class="rule-num">02</span>
+                    <h3>Team Composition</h3>
+                    <p>4 compulsory players + 1 optional substitute for BGMI. 5 compulsory players + 1 optional substitute for Valorant and MOBA Legends.
+                    </p>
+                </div>
+                <div class="rule-card reveal">
+                    <span class="rule-num">03</span>
+                    <h3>Registration</h3>
+                    <p>Every registered player must provide complete and accurate details during registration. No changes allowed after registration is completed.</p>
+                </div>
+                <div class="rule-card reveal">
+                    <span class="rule-num">04</span>
+                    <h3>Fair Play</h3>
+                    <p>Cheating, hacking, or unsportsmanlike conduct leads to immediate disqualification. Organizer
+                        decisions are final.</p>
+                </div>
+                <div class="rule-card reveal">
+                    <span class="rule-num">05</span>
+                    <h3>Device Policy</h3>
+                    <p>Players must bring their own devices. BGMI & MLBB on personal phones. Valorant requires a
+                        laptop/PC.</p>
+                </div>
+                <div class="rule-card reveal">
+                    <span class="rule-num">06</span>
+                    <h3>Punctuality</h3>
+                    <p>All players must be present at check-in with College IDs. Teams failing to check in on 9AM may
+                        be forfeited.</p>
+                </div>
+                <!-- Extra rules  -->
+                <!-- <div class="rule-card reveal">
+                    <span class="rule-num">07</span>
+                    <h3>Registration</h3>
+                    <p>Teams may register for only one game. Incomplete or late registrations (after 3rd May) will be
+                        rejected.</p>
+                </div>
+                <div class="rule-card reveal">
+                    <span class="rule-num">08</span>
+                    <h3>Registration</h3>
+                    <p>Teams may register for only one game. Incomplete or late registrations (after 3rd May) will be
+                        rejected.</p>
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== FAQ ===================== -->
+    <section id="faq" class="section faq-section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">GOT QUESTIONS?</span>
+                <h2 class="section-title">FREQUENTLY <span class="highlight">ASKED</span></h2>
+                <div class="title-bar"></div>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item reveal">
+                    <button class="faq-q"><span>Is there a registration fee?</span><i
+                            class="fas fa-chevron-down"></i></button>
+                    <div class="faq-a">
+                        <p> Registration is completely free for all participants from any college.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <button class="faq-q"><span>Can a player participate in multiple games?</span><i
+                            class="fas fa-chevron-down"></i></button>
+                    <div class="faq-a">
+                        <p>yes, each player can register for multiple game.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <button class="faq-q"><span>What if our team has fewer than 4 players?</span><i
+                            class="fas fa-chevron-down"></i></button>
+                    <div class="faq-a">
+                        <p>A minimum of 4 players is compulsory to register. The 5th slot is for a substitute and is
+                            optional.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <button class="faq-q"><span>Can players from different colleges form one team?</span><i
+                            class="fas fa-chevron-down"></i></button>
+                    <div class="faq-a">
+                        <p>No. All team members must be from the same college. Mixed-college teams are not permitted.
+                        </p>
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <button class="faq-q"><span>When will registration be confirmed?</span><i
+                            class="fas fa-chevron-down"></i></button>
+                    <div class="faq-a">
+                        <p>Confirmation will be sent to the Team Leader's Email & WhatsApp after verification. Please
+                            allow up to 24 hours.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <button class="faq-q"><span>What is IGN and Character ID?</span><i
+                            class="fas fa-chevron-down"></i></button>
+                    <div class="faq-a">
+                        <p>IGN = In-Game Name (your display name in the game). Character ID = the unique numeric ID of
+                            your game account, found in your in-game profile.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <button class="faq-q"><span>Do we need to bring our own devices?</span><i
+                            class="fas fa-chevron-down"></i></button>
+                    <div class="faq-a">
+                        <p>Yes. BGMI and MLBB players need their own smartphones. Valorant players need their own
+                            laptop/PC. Ensure your game is installed and updated before the event.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer">
+        <div class="footer-glow"></div>
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <img src="assets/Biyani Clg Logo(white).png" alt="Biyani College" class="footer-logo">
+                    <p>Biyani Inter-College<br>Esports Championship 2026</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#games">Games</a></li>
+                        <li><a href="#prize-pool">Prize Pool</a></li>
+                        <li><a href="#format">Format</a></li>
+                        <li><a href="#rules">Rules</a></li>
+                        <li><a href="register.html">Register</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Games</h4>
+                    <div class="footer-game-logos">
+                        <img src="assets/BGMI.png" alt="BGMI">
+                        <img src="assets/valorant.png" alt="Valorant">
+                        <img src="assets/Moba_Legends_5v5_logo.png" alt="Valorant">
+                        
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Biyani Group of Colleges, Jaipur</p>
+                    <p><i class="fas fa-envelope"></i> esports@biyanicolleges.org</p>
+                    <p><i class="fab fa-whatsapp"></i> Contact via WhatsApp</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Biyani Inter-College Esports Championship. All rights reserved.</p>
+                <p>Organized by <strong>Biyani Group of Colleges, Jaipur</strong></p>
+            </div>
+        </div>
+    </footer>
+    <!-- Floating Social Buttons -->
+    <div class="floating-social">
+        <a href="https://chat.whatsapp.com/LifVQkr7Jc6Fq8d5loANOQ" target="_blank" class="float-btn float-wa">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://www.instagram.com/biyaniesportsclub" target="_blank" class="float-btn float-ig">
+            <i class="fab fa-instagram"></i>
+        </a>
+    </div>
 
     <script src="script.js"></script>
 </body>
