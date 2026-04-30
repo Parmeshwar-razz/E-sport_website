@@ -278,82 +278,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        /* --- FILE UPLOAD (MOCKUP LOGIC) --- */
-        const dropZone = document.getElementById('fileDropZone');
-        const fileInput = document.getElementById('teamLogo');
-        const dropInner = document.getElementById('fileDropInner');
-        const previewBox = document.getElementById('logoPreviewBox');
-        const previewImg = document.getElementById('logoPreviewImg');
-        const removeBtn = document.getElementById('removeLogo');
-        let uploadedFile = null;
-
-        // Max file size: 250KB (defined here so handleFiles can use it)
-        const MAX_FILE_SIZE = 250 * 1024;
-
-        // Click to browse
-        dropZone.addEventListener('click', (e) => {
-            if (e.target !== removeBtn && e.target.closest('#removeLogo') === null) {
-                fileInput.click();
-            }
-        });
-
-        // Drag events
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, preventDefaults, false);
-        });
-
-        function preventDefaults(e) { e.preventDefault(); e.stopPropagation(); }
-
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropZone.addEventListener(eventName, () => dropZone.classList.add('dragover'), false);
-        });
-
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, () => dropZone.classList.remove('dragover'), false);
-        });
-
-        dropZone.addEventListener('drop', (e) => {
-            let dt = e.dataTransfer;
-            let files = dt.files;
-            handleFiles(files);
-        });
-
-        fileInput.addEventListener('change', function () { handleFiles(this.files); });
-
-        function handleFiles(files) {
-            if (files.length > 0) {
-                const file = files[0];
-                if (!file.type.startsWith('image/')) {
-                    showToast("Please select a valid image file (PNG, JPG, WEBP).", true);
-                    return;
-                }
-                if (file.size > MAX_FILE_SIZE) {
-                    showToast(`Team logo too large! Max 250KB. Your file: ${(file.size / 1024).toFixed(1)}KB.`, true);
-                    fileInput.value = "";
-                    return;
-                }
-                uploadedFile = file;
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    previewImg.src = e.target.result;
-                    dropInner.style.display = 'none';
-                    previewBox.style.display = 'inline-block';
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        removeBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            fileInput.value = "";
-            uploadedFile = null;
-            previewImg.src = "";
-            previewBox.style.display = 'none';
-            dropInner.style.display = 'block';
-        });
-
 
         /* --- SUPABASE SETUP & FORM SUBMISSION --- */
+        const MAX_FILE_SIZE = 250 * 1024; // 250KB max for college ID images
         const SUPABASE_URL = 'https://fqxqoqpiaiakzagplbfl.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZxeHFvcXBpYWlha3phZ3BsYmZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczNTQyNjksImV4cCI6MjA5MjkzMDI2OX0.b60mYxriGmCFNaBCJBacxOswPUVTL6aeKo7e6TtdXa0';
 
@@ -484,7 +411,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     return null;
                 };
 
-                const teamLogoUrl = uploadedFile ? await uploadToStorage(uploadedFile, 'team-logos') : null;
+                const teamLogoUrl = null; // Team logo upload removed
 
                 const [p1url, p2url, p3url, p4url, p5url, p6url] = await Promise.all([
                     uploadFile('p1CollegeID', 'college-ids'),
