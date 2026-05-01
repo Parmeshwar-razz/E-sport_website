@@ -55,6 +55,7 @@
             <a href="assets/Biyani inter college esports championship rulebook.pdf" download>Rules</a>
             <a href="#faq">FAQ</a>
             <a href="register.html" class="mobile-reg-btn">REGISTER NOW</a>
+
         </div>
         <!-- Backdrop to close nav when clicking outside -->
         <div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
@@ -98,9 +99,9 @@
             </div>
 
             <!-- Countdown -->
-            <div class="countdown-block">
+            <div class="countdown-block" id="countdownBlock">
                 <p class="countdown-label">REGISTRATION ENDS IN</p>
-                <div class="countdown-timer">
+                <div class="countdown-timer" id="countdownTimer">
                     <div class="cd-unit">
                         <span class="cd-num" id="days">00</span>
                         <span class="cd-lbl">DAYS</span>
@@ -121,12 +122,22 @@
                         <span class="cd-lbl">SECS</span>
                     </div>
                 </div>
+                <div id="regClosedMsg" style="display:none;">
+                    <p class="reg-closed-badge">🔒 REGISTRATION CLOSED</p>
+                    <p class="reg-closed-sub">Registration deadline has passed. Stay tuned for the event on 4th May!</p>
+                </div>
             </div>
 
-            <a href="register.html" class="hero-cta-btn">
-                <span>REGISTER YOUR TEAM</span>
-                <i class="fas fa-arrow-right"></i>
-            </a>
+            <div class="hero-cta-group">
+                <a href="register.html" class="hero-cta-btn" id="heroRegisterBtn">
+                    <span>REGISTER YOUR TEAM</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="https://forms.gle/xrwvutxL3Uei8eww5" target="_blank" rel="noopener" class="hero-cta-btn hero-attendee-btn">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span>REGISTER AS ATTENDEE</span>
+                </a>
+            </div>
         </div>
 
         <a href="#about" class="hero-scroll-hint">

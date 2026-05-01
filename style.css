@@ -560,6 +560,47 @@ ul {
     transform: translateX(5px);
 }
 
+/* ── Two-button group layout ── */
+.hero-cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Attendee button — outlined style */
+.hero-attendee-btn {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    box-shadow: 0 0 16px var(--primary-glow);
+}
+.hero-attendee-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    box-shadow: 0 0 30px var(--primary-glow);
+}
+.hero-attendee-btn:hover i {
+    transform: none;
+}
+
+/* Registration Closed message */
+.reg-closed-badge {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #ff4d4d;
+    letter-spacing: 2px;
+    text-shadow: 0 0 18px rgba(255,77,77,0.6);
+    margin: 0 0 8px;
+}
+.reg-closed-sub {
+    color: rgba(255,255,255,0.65);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
 .hero-scroll-hint {
     position: absolute;
     bottom: 30px;

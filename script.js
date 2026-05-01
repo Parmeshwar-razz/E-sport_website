@@ -67,29 +67,39 @@ document.addEventListener('DOMContentLoaded', () => {
        ========================================================= */
     if (!isRegPage) {
 
-        /* --- 2. COUNTDOWN TIMER --- */
-        // Set target date: 4th May 2026, 09:00:00 AM (local time)
-        const targetDate = new Date('May 3, 2026 09:00:00').getTime();
+        /* --- 2. COUNTDOWN TIMER (Registration Deadline: 3rd May 2026, 10:00 PM IST) --- */
+        // IST = UTC+5:30 → 3 May 22:00 IST = 3 May 16:30 UTC
+        const REG_DEADLINE = new Date('2026-05-03T22:00:00+05:30').getTime();
 
         const updateCountdown = () => {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
+            const now = Date.now();
+            const distance = REG_DEADLINE - now;
 
-            if (distance < 0) {
-                document.getElementById('days').innerText = "00";
-                document.getElementById('hours').innerText = "00";
-                document.getElementById('minutes').innerText = "00";
-                document.getElementById('seconds').innerText = "00";
-                return;
+            if (distance <= 0) {
+                // ── REGISTRATION CLOSED ──
+                const timer = document.getElementById('countdownTimer');
+                const closedMsg = document.getElementById('regClosedMsg');
+                const registerBtn = document.getElementById('heroRegisterBtn');
+
+                if (timer) timer.style.display = 'none';
+                if (closedMsg) closedMsg.style.display = 'block';
+                if (registerBtn) {
+                    registerBtn.style.pointerEvents = 'none';
+                    registerBtn.style.opacity = '0.4';
+                    registerBtn.style.cursor = 'not-allowed';
+                    registerBtn.removeAttribute('href');
+                    registerBtn.querySelector('span').innerText = 'REGISTRATION CLOSED';
+                }
+                return; // stop updating
             }
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const days    = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById('days').innerText = days.toString().padStart(2, '0');
-            document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+            document.getElementById('days').innerText    = days.toString().padStart(2, '0');
+            document.getElementById('hours').innerText   = hours.toString().padStart(2, '0');
             document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
             document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
         };
