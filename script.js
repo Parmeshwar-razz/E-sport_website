@@ -197,9 +197,246 @@ document.addEventListener('DOMContentLoaded', () => {
        ========================================================= */
     if (isRegPage) {
 
-        /* --- PARSE URL FOR GAME PRE-SELECTION --- */
+        /* --- PER-GAME CONFIG --- */
+        const GAME_CONFIG = {
+            BGMI: {
+                table: 'bgmi_registrations',
+                folder: 'uploads/bgmi',
+                requiredCount: 4,
+                totalCount: 5,
+                note: 'Players 1\u20134 are <strong>compulsory</strong>. Player 5 is a <strong>Substitute</strong> (optional).',
+                fields: [
+                    { key: 'name',       label: 'Name',               type: 'text', required: true, placeholder: 'Full Name' },
+                    { key: 'ign',        label: 'IGN \u2014 In-Game Name', type: 'text', required: true, placeholder: 'In-Game Name' },
+                    { key: 'char_id',    label: 'Character ID',        type: 'text', required: true, placeholder: 'Numbers only e.g. 512345678', inputmode: 'numeric', numericOnly: true },
+                    { key: 'college_id', label: 'College ID Image',    type: 'file', required: true },
+                ],
+            },
+            Valorant: {
+                table: 'valorant_registrations',
+                folder: 'uploads/valorant',
+                requiredCount: 5,
+                totalCount: 6,
+                note: 'Players 1\u20135 are <strong>compulsory</strong>. Player 6 is a <strong>Substitute</strong> (optional).',
+                fields: [
+                    { key: 'name',       label: 'Name',               type: 'text', required: true, placeholder: 'Full Name' },
+                    { key: 'ign',        label: 'IGN \u2014 In-Game Name', type: 'text', required: true, placeholder: 'In-Game Name' },
+                    { key: 'tagline',    label: 'Tagline',             type: 'text', required: true, placeholder: 'e.g. SilentAce#1234', alphanumeric: true },
+                    { key: 'college_id', label: 'College ID Image',    type: 'file', required: true },
+                ],
+            },
+            MLBB: {
+                table: 'moba_registrations',
+                folder: 'uploads/moba',
+                requiredCount: 5,
+                totalCount: 6,
+                note: 'Players 1\u20135 are <strong>compulsory</strong>. Player 6 is a <strong>Substitute</strong> (optional).',
+                fields: [
+                    { key: 'name',       label: 'Name',               type: 'text', required: true, placeholder: 'Full Name' },
+                    { key: 'ign',        label: 'IGN \u2014 In-Game Name', type: 'text', required: true, placeholder: 'In-Game Name' },
+                    { key: 'char_id',    label: 'Character ID',        type: 'text', required: true, placeholder: 'Numbers only e.g. 512345678', inputmode: 'numeric', numericOnly: true },
+                    { key: 'server_id',  label: 'Server ID',           type: 'text', required: true, placeholder: 'Numbers only', inputmode: 'numeric', numericOnly: true },
+                    { key: 'college_id', label: 'College ID Image',    type: 'file', required: true },
+                ],
+            },
+        };
+
+        /* --- URL PRE-SELECTION --- */
         const urlParams = new URLSearchParams(window.location.search);
         const gameParam = urlParams.get('game');
+        if (gameParam) {
+            const radio = document.querySelector(`input[name="game_selected"][value="${gameParam}"]`);
+            if (radio) radio.checked = true;
+        }
+
+        const getSelectedGame = () => document.querySelector('input[name="game_selected"]:checked').value;
+
+        /* --- DYNAMIC PLAYER BLOCK RENDERER --- */
+        function renderPlayerBlocks(game) {
+            const config = GAME_CONFIG[game];
+            const container = document.getElementById('playersContainer');
+            container.innerHTML = '';
+            document.getElementById('playerNoteText').innerHTML = config.note;
+
+            for (let i = 1; i <= config.totalCount; i++) {
+                const isRequired = i <= config.requiredCount;
+                let fieldsHTML = '';
+
+                config.fields.forEach(field => {
+                    const fieldId = `p${i}_${field.key}`;
+                    const fieldRequired = isRequired && field.required;
+                    const optSuffix = isRequired ? '' : ' (optional)';
+
+                    if (field.type === 'file') {
+                        fieldsHTML += `<div class="form-group">
+                            <label for="${fieldId}">${field.label}${fieldRequired ? ' <span class="req">*</span>' : ''}</label>
+                            <input type="file" id="${fieldId}" accept="image/*" class="file-input-sm" ${fieldRequired ? 'required' : ''}>
+                        </div>`;
+                    } else {
+                        fieldsHTML += `<div class="form-group">
+                            <label for="${fieldId}">${field.label}${fieldRequired ? ' <span class="req">*</span>' : ''}</label>
+                            <input type="text" id="${fieldId}"
+                                placeholder="${field.placeholder}${optSuffix}"
+                                ${field.inputmode ? `inputmode="${field.inputmode}"` : ''}
+                                ${field.numericOnly ? 'pattern="[0-9]+"' : ''}
+                                ${fieldRequired ? 'required' : ''}>
+                        </div>`;
+                    }
+                });
+
+                const block = document.createElement('div');
+                block.className = `player-block ${isRequired ? 'required-player' : 'substitute-player'}`;
+                block.id = `p${i}Block`;
+                block.innerHTML = `
+                    <div class="player-block-head">
+                        <span class="p-num">PLAYER ${i}</span>
+                        <span class="p-badge ${isRequired ? 'required-badge' : 'sub-badge'}">${isRequired ? 'REQUIRED' : 'SUBSTITUTE \u2014 OPTIONAL'}</span>
+                    </div>
+                    <div class="form-grid">${fieldsHTML}</div>`;
+                container.appendChild(block);
+            }
+
+            // Numeric-only real-time enforcement
+            config.fields.filter(f => f.numericOnly).forEach(field => {
+                for (let i = 1; i <= config.totalCount; i++) {
+                    const el = document.getElementById(`p${i}_${field.key}`);
+                    if (!el) continue;
+                    el.addEventListener('input', () => { const c = el.value.replace(/[^0-9]/g, ''); if (el.value !== c) el.value = c; });
+                    el.addEventListener('keypress', ev => { if (!/[0-9]/.test(ev.key)) ev.preventDefault(); });
+                }
+            });
+        }
+
+        /* --- INIT & REACT TO GAME CHANGE --- */
+        document.querySelectorAll('input[name="game_selected"]').forEach(r =>
+            r.addEventListener('change', () => renderPlayerBlocks(getSelectedGame()))
+        );
+        renderPlayerBlocks(getSelectedGame());
+
+        /* --- SUPABASE SETUP --- */
+        const MAX_FILE_SIZE = 250 * 1024;
+        const SUPABASE_URL = 'https://fqxqoqpiaiakzagplbfl.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZxeHFvcXBpYWlha3phZ3BsYmZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczNTQyNjksImV4cCI6MjA5MjkzMDI2OX0.b60mYxriGmCFNaBCJBacxOswPUVTL6aeKo7e6TtdXa0';
+        let supabaseClient = null;
+        try {
+            if (window.supabase) {
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                console.log('Supabase initialized');
+            }
+        } catch (e) { console.error('Supabase init failed:', e); }
+
+        async function uploadToStorage(file, folder) {
+            const ext = file.name.split('.').pop().toLowerCase();
+            const uniqueName = `${folder}/${Date.now()}_${Math.random().toString(36).substr(2, 6)}.${ext}`;
+            const { error: upErr } = await supabaseClient.storage
+                .from('esports-registrations').upload(uniqueName, file, { cacheControl: '3600', upsert: false });
+            if (upErr) throw upErr;
+            const { data: urlData } = supabaseClient.storage.from('esports-registrations').getPublicUrl(uniqueName);
+            return urlData.publicUrl;
+        }
+
+        /* --- FORM SUBMISSION --- */
+        document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const game = getSelectedGame();
+            const config = GAME_CONFIG[game];
+
+            // Basic validations
+            const waNumber = document.getElementById('leaderWhatsapp').value.trim();
+            if (!/^[0-9]{10}$/.test(waNumber)) { showToast('Please enter a valid 10-digit WhatsApp number.', true); return; }
+            const email = document.getElementById('leaderEmail').value.trim();
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Please enter a valid email address.', true); return; }
+            const captain = document.getElementById('captainName').value.trim();
+            if (!/^[a-zA-Z\s]{2,}$/.test(captain)) { showToast('Captain Name must contain letters only.', true); return; }
+
+            // Per-player validation (required players only)
+            for (let i = 1; i <= config.requiredCount; i++) {
+                for (const field of config.fields) {
+                    if (!field.required) continue;
+                    const el = document.getElementById(`p${i}_${field.key}`);
+                    if (!el) continue;
+                    if (field.type === 'file') {
+                        if (!el.files || !el.files[0]) { showToast(`Player ${i}: ${field.label} is required.`, true); return; }
+                        if (el.files[0].size > MAX_FILE_SIZE) { showToast(`Player ${i} ${field.label} too large! Max 250KB.`, true); return; }
+                    } else {
+                        const val = el.value.trim();
+                        if (!val) { showToast(`Player ${i}: ${field.label} is required.`, true); el.focus(); return; }
+                        if (field.numericOnly && !/^[0-9]+$/.test(val)) { showToast(`Player ${i}: ${field.label} must be numbers only.`, true); el.focus(); return; }
+                        if (field.alphanumeric && !/^[a-zA-Z0-9#\-_.]+$/.test(val)) { showToast(`Player ${i}: ${field.label} has invalid characters.`, true); el.focus(); return; }
+                    }
+                }
+            }
+
+            // Substitute: all-or-nothing
+            const subIdx = config.totalCount;
+            const subTextFields = config.fields.filter(f => f.type !== 'file');
+            const subFileEl = document.getElementById(`p${subIdx}_college_id`);
+            const subFilledCount = subTextFields.filter(f => document.getElementById(`p${subIdx}_${f.key}`)?.value.trim()).length;
+            const subHasFile = subFileEl?.files?.length > 0;
+            if (subFilledCount > 0 || subHasFile) {
+                if (subFilledCount < subTextFields.length || !subHasFile) {
+                    showToast('Substitute details incomplete. Fill all fields or leave all empty.', true);
+                    return;
+                }
+            }
+
+            if (!document.getElementById('registrationForm').checkValidity()) {
+                document.getElementById('registrationForm').reportValidity(); return;
+            }
+
+            // Loading state
+            const submitBtn  = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitBtnText');
+            const submitIcon = document.getElementById('submitIcon');
+            const spinner    = document.getElementById('btnSpinner');
+            submitBtn.disabled = true;
+            submitIcon.style.display = 'none';
+            spinner.style.display = 'block';
+
+            try {
+                if (!supabaseClient) throw new Error('Supabase client not initialized.');
+                submitText.innerText = 'UPLOADING FILES...';
+
+                const payload = {
+                    college_name:    document.getElementById('collegeName').value.trim(),
+                    team_name:       document.getElementById('teamName').value.trim(),
+                    department:      document.getElementById('courseDept').value.trim(),
+                    captain_name:    document.getElementById('captainName').value.trim(),
+                    leader_email:    document.getElementById('leaderEmail').value.trim(),
+                    leader_whatsapp: document.getElementById('leaderWhatsapp').value.trim(),
+                };
+
+                for (let i = 1; i <= config.totalCount; i++) {
+                    for (const field of config.fields) {
+                        const el = document.getElementById(`p${i}_${field.key}`);
+                        if (!el) continue;
+                        const colKey = `p${i}_${field.key}`;
+                        if (field.type === 'file') {
+                            payload[colKey] = (el.files && el.files[0]) ? await uploadToStorage(el.files[0], config.folder) : null;
+                        } else {
+                            payload[colKey] = el.value.trim() || null;
+                        }
+                    }
+                }
+
+                submitText.innerText = 'SAVING REGISTRATION...';
+                console.log(`Submitting to ${config.table}:`, payload);
+                const { data, error } = await supabaseClient.from(config.table).insert([payload]).select();
+                if (error) throw error;
+                console.log('Saved:', data);
+                showSuccessScreen(game);
+
+            } catch (err) {
+                console.error('Submission failed:', err);
+                const errMsg = err?.message || err?.details || 'Unknown error';
+                showToast(`Submission failed: ${errMsg.substring(0, 80)}`, true);
+                submitBtn.disabled = false;
+                submitText.innerText = 'SUBMIT REGISTRATION';
+                submitIcon.style.display = 'inline-block';
+                spinner.style.display = 'none';
+            }
+        });
+    }
         if (gameParam) {
             const radio = document.querySelector(`input[name="game_selected"][value="${gameParam}"]`);
             if (radio) radio.checked = true;
