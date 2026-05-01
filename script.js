@@ -280,9 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
         /* --- CLEAR ALL PLAYER FIELDS ON GAME SWITCH --- */
         function clearPlayerFields() {
             const form = document.getElementById('registrationForm');
-            // Clear all text inputs inside player blocks
-            form.querySelectorAll('.player-block input[type="text"]').forEach(el => el.value = '');
-            form.querySelectorAll('.player-block input[type="file"]').forEach(el => el.value = '');
+            if (form) form.reset();
         }
 
         gameRadios.forEach(radio => radio.addEventListener('change', () => {
