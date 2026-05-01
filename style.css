@@ -364,7 +364,7 @@ ul {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 140px 20px 80px;
+    padding: 100px 20px 40px;
     animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -380,7 +380,7 @@ ul {
 .tournament-logo {
     max-height: 250px;
     filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
-    animation: float 4s ease-in-out infinite;
+    /* float animation only on mobile, see media query below */
 }
 
 .logo-fallback {
@@ -567,22 +567,7 @@ ul {
     gap: 16px;
     justify-content: center;
     align-items: center;
-}
-
-/* Attendee button — outlined style */
-.hero-attendee-btn {
-    background: transparent;
-    border: 2px solid var(--primary-color);
-    color: var(--primary-color);
-    box-shadow: 0 0 16px var(--primary-glow);
-}
-.hero-attendee-btn:hover {
-    background: var(--primary-color);
-    color: white;
-    box-shadow: 0 0 30px var(--primary-glow);
-}
-.hero-attendee-btn:hover i {
-    transform: none;
+    margin-top: 4px;
 }
 
 /* Registration Closed message */
@@ -2058,4 +2043,14 @@ ul {
 @media (min-width: 1025px) {
     .tl-date { display: block; }
     .tl-card::before { display: none; }
+
+    /* No float animation on laptop/desktop - saves vertical space */
+    .tournament-logo { animation: none; }
+    .tournament-logo-wrap { margin-bottom: 10px; }
+    .tournament-logo { max-height: 200px; }
+}
+
+/* Float animation only on mobile */
+@media (max-width: 768px) {
+    .tournament-logo { animation: float 4s ease-in-out infinite; }
 }
