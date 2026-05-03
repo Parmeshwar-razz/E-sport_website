@@ -7,6 +7,16 @@ document.addEventListener('DOMContentLoaded', () => {
     /* --- GLOBALS & UTILS --- */
     const isRegPage = document.body.classList.contains('reg-page');
 
+    // GLOBAL REGISTRATION DEADLINE (4th May 2026, 10:00 PM IST = 16:30 UTC)
+    const REG_DEADLINE = new Date('2026-05-04T22:00:00+05:30').getTime();
+
+    // If on register page and deadline has passed, kick them out
+    if (isRegPage && Date.now() > REG_DEADLINE) {
+        alert('Registration is closed! The deadline has passed.');
+        window.location.replace('index.html');
+        return;
+    }
+
     /* --- 1. NAVBAR SCROLL & MOBILE MENU (Both Pages) --- */
     const navbar = document.getElementById('navbar');
     const hamburger = document.getElementById('hamburger');
@@ -67,10 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
        ========================================================= */
     if (!isRegPage) {
 
-        /* --- 2. COUNTDOWN TIMER (Registration Deadline: 3rd May 2026, 10:00 PM IST) --- */
-        // IST = UTC+5:30 → 3 May 22:00 IST = 3 May 16:30 UTC
-        const REG_DEADLINE = new Date('2026-05-03T22:00:00+05:30').getTime();
-
         const updateCountdown = () => {
             const now = Date.now();
             const distance = REG_DEADLINE - now;
@@ -79,17 +85,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 // ── REGISTRATION CLOSED ──
                 const timer = document.getElementById('countdownTimer');
                 const closedMsg = document.getElementById('regClosedMsg');
-                const registerBtn = document.getElementById('heroRegisterBtn');
 
                 if (timer) timer.style.display = 'none';
                 if (closedMsg) closedMsg.style.display = 'block';
-                if (registerBtn) {
-                    registerBtn.style.pointerEvents = 'none';
-                    registerBtn.style.opacity = '0.4';
-                    registerBtn.style.cursor = 'not-allowed';
-                    registerBtn.removeAttribute('href');
-                    registerBtn.querySelector('span').innerText = 'REGISTRATION CLOSED';
-                }
+
+                // Disable ALL register buttons globally (navbar, hero, games)
+                const registerLinks = document.querySelectorAll('a[href^="register.html"], .mobile-reg-btn');
+                registerLinks.forEach(btn => {
+                    btn.style.pointerEvents = 'none';
+                    btn.style.opacity = '0.5';
+                    btn.style.cursor = 'not-allowed';
+                    btn.removeAttribute('href');
+                    
+                    const span = btn.querySelector('span');
+                    if (span) span.innerText = 'CLOSED';
+                    else if (!btn.classList.contains('mobile-reg-btn')) btn.innerText = 'CLOSED';
+                });
+
                 return; // stop updating
             }
 
@@ -367,6 +379,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            // --- DOUBLE CHECK DEADLINE ON SUBMIT ---
+            if (Date.now() > REG_DEADLINE) {
+                showToast("Registration is closed! The deadline has passed.", true);
+                setTimeout(() => window.location.replace('index.html'), 2000);
+                return;
+            }
 
             // --- CUSTOM VALIDATIONS ---
             const waNumber = document.getElementById('leaderWhatsapp').value.trim();
