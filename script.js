@@ -243,24 +243,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 el.style.display = selectedGame === 'MLBB' ? '' : 'none';
             });
 
-            // ── Update CharID label: "Tagline" for Valorant, "Character ID" otherwise ──
+            // ── Update CharID label: "Character ID" ──
             for (let i = 1; i <= 6; i++) {
                 const inp = document.getElementById(`p${i}CharID`);
                 const lbl = document.querySelector(`label[for="p${i}CharID"]`);
                 if (!inp || !lbl) continue;
                 const isReqPlayer = (selectedGame === 'BGMI') ? i <= 4 : i <= 5;
                 const asterisk = isReqPlayer ? ' <span class="req">*</span>' : '';
-                if (selectedGame === 'Valorant') {
-                    lbl.innerHTML = 'Tagline' + asterisk;
-                    inp.placeholder = isReqPlayer ? 'e.g. PlayerName#1234' : 'e.g. PlayerName#1234 (optional)';
-                    inp.removeAttribute('inputmode');
-                    inp.removeAttribute('pattern');
-                } else {
-                    lbl.innerHTML = 'Character ID' + asterisk;
-                    inp.placeholder = isReqPlayer ? 'Numbers only e.g. 512345678' : 'Numbers only (optional)';
-                    inp.setAttribute('inputmode', 'numeric');
-                    inp.setAttribute('pattern', isReqPlayer ? '[0-9]+' : '[0-9]*');
-                }
+                lbl.innerHTML = 'Character ID' + asterisk;
+                inp.placeholder = isReqPlayer ? 'Numbers only e.g. 512345678' : 'Numbers only (optional)';
+                inp.setAttribute('inputmode', 'numeric');
+                inp.setAttribute('pattern', isReqPlayer ? '[0-9]+' : '[0-9]*');
             }
 
             // ── Update Server ID required state (MLBB P1-P5 required, P6 optional) ──
@@ -311,20 +304,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }));
         updatePlayerFields(); // Run once on load
 
-        /* --- CHARACTER ID: NUMERIC only for BGMI/MLBB (skip for Valorant Tagline) --- */
+        /* --- CHARACTER ID: NUMERIC only for BGMI/MLBB --- */
         const charIDInputs = ['p1CharID','p2CharID','p3CharID','p4CharID','p5CharID','p6CharID'];
         charIDInputs.forEach(id => {
             const el = document.getElementById(id);
             if (!el) return;
             el.addEventListener('input', () => {
-                const game = document.querySelector('input[name="game_selected"]:checked').value;
-                if (game === 'Valorant') return;
                 const cleaned = el.value.replace(/[^0-9]/g, '');
                 if (el.value !== cleaned) el.value = cleaned;
             });
             el.addEventListener('keypress', (e) => {
-                const game = document.querySelector('input[name="game_selected"]:checked').value;
-                if (game === 'Valorant') return;
                 if (!/[0-9]/.test(e.key)) e.preventDefault();
             });
         });
@@ -408,19 +397,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const gameSelected = document.querySelector('input[name="game_selected"]:checked').value;
 
-            // --- CHARACTER ID / TAGLINE / SERVER ID VALIDATION ---
-            if (gameSelected === 'Valorant') {
-                // Tagline: alphanumeric — just check not empty (HTML required handles it)
-            } else {
-                // BGMI & MLBB: CharID must be numeric
-                const reqCharIDs = ['p1CharID','p2CharID','p3CharID','p4CharID'];
-                if (gameSelected !== 'BGMI') reqCharIDs.push('p5CharID');
-                for (const cid of reqCharIDs) {
-                    const val = document.getElementById(cid).value.trim();
-                    if (val && !/^[0-9]+$/.test(val)) {
-                        showToast(`Character ID must be numbers only! (Player ${cid.replace('p','').replace('CharID','')})`, true);
-                        document.getElementById(cid).focus(); return;
-                    }
+            // --- CHARACTER ID / SERVER ID VALIDATION ---
+            // BGMI & MLBB: CharID must be numeric
+            const reqCharIDs = ['p1CharID','p2CharID','p3CharID','p4CharID'];
+            if (gameSelected !== 'BGMI') reqCharIDs.push('p5CharID');
+            for (const cid of reqCharIDs) {
+                const val = document.getElementById(cid).value.trim();
+                if (val && !/^[0-9]+$/.test(val)) {
+                    showToast(`Character ID must be numbers only! (Player ${cid.replace('p','').replace('CharID','')})`, true);
+                    document.getElementById(cid).focus(); return;
                 }
             }
             if (gameSelected === 'MLBB') {
@@ -515,22 +500,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
 
                 // BGMI has max 5 players (P1-P4 required + P5 substitute)
-                // Valorant & MLBB have max 6 players (P1-P5 required + P6 substitute)
+                // MLBB has max 6 players (P1-P5 required + P6 substitute)
                 const maxPlayers = gameSelected === 'BGMI' ? 5 : 6;
 
                 for (let n = 1; n <= maxPlayers; n++) {
                     payload[`p${n}_name`]       = getV(`p${n}Name`);
                     payload[`p${n}_ign`]        = getV(`p${n}IGN`);
                     payload[`p${n}_college_id`] = urls[n - 1];
-                    if (gameSelected === 'Valorant') {
-                        payload[`p${n}_tagline`]  = getV(`p${n}CharID`);
-                    } else {
-                        payload[`p${n}_char_id`]  = getV(`p${n}CharID`);
-                        if (gameSelected === 'MLBB') payload[`p${n}_server_id`] = getV(`p${n}ServerID`);
-                    }
+                    payload[`p${n}_char_id`]  = getV(`p${n}CharID`);
+                    if (gameSelected === 'MLBB') payload[`p${n}_server_id`] = getV(`p${n}ServerID`);
                 }
 
-                const tableMap = { BGMI: 'bgmi_registrations', Valorant: 'valorant_registrations', MLBB: 'moba_registrations' };
+                const tableMap = { BGMI: 'bgmi_registrations', MLBB: 'moba_registrations' };
                 console.log(`Submitting to ${tableMap[gameSelected]}:`, payload);
 
                 const { data, error } = await supabaseClient
@@ -588,7 +569,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let gameColor = "";
         if (game === 'BGMI') gameColor = '#f59e0b';
-        if (game === 'Valorant') gameColor = '#ff2a54';
         if (game === 'MLBB') gameColor = '#3b82f6';
 
         gameTag.innerText = `REGISTERED FOR ${game.toUpperCase()}`;
