@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     /* --- GLOBALS & UTILS --- */
     const isRegPage = document.body.classList.contains('reg-page');
 
-    // GLOBAL REGISTRATION DEADLINE (4th May 2026, 10:00 PM IST = 16:30 UTC)
-    const REG_DEADLINE = new Date('2026-05-04T22:00:00+05:30').getTime();
+    // GLOBAL REGISTRATION DEADLINE (5th May 2026, 11:59 PM IST)
+    const REG_DEADLINE = new Date('2026-05-05T23:59:00+05:30').getTime();
 
     // If on register page and deadline has passed, kick them out
     if (isRegPage && Date.now() > REG_DEADLINE) {
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     btn.style.opacity = '0.5';
                     btn.style.cursor = 'not-allowed';
                     btn.removeAttribute('href');
-                    
+
                     const span = btn.querySelector('span');
                     if (span) span.innerText = 'CLOSED';
                     else if (!btn.classList.contains('mobile-reg-btn')) btn.innerText = 'CLOSED';
@@ -105,13 +105,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 return; // stop updating
             }
 
-            const days    = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById('days').innerText    = days.toString().padStart(2, '0');
-            document.getElementById('hours').innerText   = hours.toString().padStart(2, '0');
+            document.getElementById('days').innerText = days.toString().padStart(2, '0');
+            document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
             document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
             document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
         };
@@ -119,29 +119,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        /* --- AUTO TIMELINE ACTIVE MARKER (updates per current date) --- */
-        function updateTimelineMarkers() {
-            const now = new Date();
-            // Event milestone dates (year, month-1, day)
-            const day4 = new Date(2026, 4, 4);  // 4 May 2026
-            const day5 = new Date(2026, 4, 5);  // 5 May 2026
-            const day7 = new Date(2026, 4, 7);  // 7 May 2026
-
-            // Determine which stage is active
-            let activeStage = 0; // 0 = 4 MAY, 1 = 5 MAY, 2 = 7 MAY
-            if (now >= day5 && now < day7) activeStage = 1;
-            else if (now >= day7) activeStage = 2;
-
-            // Update all timelines (BGMI, Valo, MLBB all have same dates)
-            document.querySelectorAll('.timeline').forEach(timeline => {
-                const markers = timeline.querySelectorAll('.tl-marker');
-                markers.forEach((marker, i) => {
-                    marker.classList.remove('active-marker');
-                    if (i === activeStage) marker.classList.add('active-marker');
-                });
-            });
-        }
-        updateTimelineMarkers();
+        /* --- AUTO TIMELINE ACTIVE MARKER --- */
+        // (Logic removed as there is only 1 event day now on 7th May)
 
         /* --- 3. SCROLL REVEAL ANIMATION --- */
         const revealElements = document.querySelectorAll('.reveal');
@@ -235,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const p6Block = document.getElementById('p6Block');
             const noteText = document.getElementById('playerNoteText');
             const p5Name = document.getElementById('p5Name');
-            const p5IGN  = document.getElementById('p5IGN');
+            const p5IGN = document.getElementById('p5IGN');
             const p5CharID = document.getElementById('p5CharID');
 
             // ── Show/hide MOBA-only Server ID fields ──
@@ -243,17 +222,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 el.style.display = selectedGame === 'MLBB' ? '' : 'none';
             });
 
-            // ── Update CharID label: "Character ID" ──
+            // ── Update CharID label: "Tagline" for Valorant, "Character ID" otherwise ──
             for (let i = 1; i <= 6; i++) {
                 const inp = document.getElementById(`p${i}CharID`);
                 const lbl = document.querySelector(`label[for="p${i}CharID"]`);
                 if (!inp || !lbl) continue;
                 const isReqPlayer = (selectedGame === 'BGMI') ? i <= 4 : i <= 5;
                 const asterisk = isReqPlayer ? ' <span class="req">*</span>' : '';
-                lbl.innerHTML = 'Character ID' + asterisk;
-                inp.placeholder = isReqPlayer ? 'Numbers only e.g. 512345678' : 'Numbers only (optional)';
-                inp.setAttribute('inputmode', 'numeric');
-                inp.setAttribute('pattern', isReqPlayer ? '[0-9]+' : '[0-9]*');
+                if (selectedGame === 'Valorant') {
+                    lbl.innerHTML = 'Tagline' + asterisk;
+                    inp.placeholder = isReqPlayer ? 'e.g. PlayerName#1234' : 'e.g. PlayerName#1234 (optional)';
+                    inp.removeAttribute('inputmode');
+                    inp.removeAttribute('pattern');
+                } else {
+                    lbl.innerHTML = 'Character ID' + asterisk;
+                    inp.placeholder = isReqPlayer ? 'Numbers only e.g. 512345678' : 'Numbers only (optional)';
+                    inp.setAttribute('inputmode', 'numeric');
+                    inp.setAttribute('pattern', isReqPlayer ? '[0-9]+' : '[0-9]*');
+                }
             }
 
             // ── Update Server ID required state (MLBB P1-P5 required, P6 optional) ──
@@ -304,25 +290,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }));
         updatePlayerFields(); // Run once on load
 
-        /* --- CHARACTER ID: NUMERIC only for BGMI/MLBB --- */
-        const charIDInputs = ['p1CharID','p2CharID','p3CharID','p4CharID','p5CharID','p6CharID'];
+        /* --- CHARACTER ID: NUMERIC only for BGMI/MLBB (skip for Valorant Tagline) --- */
+        const charIDInputs = ['p1CharID', 'p2CharID', 'p3CharID', 'p4CharID', 'p5CharID', 'p6CharID'];
         charIDInputs.forEach(id => {
             const el = document.getElementById(id);
             if (!el) return;
             el.addEventListener('input', () => {
+                const game = document.querySelector('input[name="game_selected"]:checked').value;
+                if (game === 'Valorant') return;
                 const cleaned = el.value.replace(/[^0-9]/g, '');
                 if (el.value !== cleaned) el.value = cleaned;
             });
             el.addEventListener('keypress', (e) => {
+                const game = document.querySelector('input[name="game_selected"]:checked').value;
+                if (game === 'Valorant') return;
                 if (!/[0-9]/.test(e.key)) e.preventDefault();
             });
         });
 
         /* --- SERVER ID: NUMERIC always (MLBB only fields) --- */
-        ['p1ServerID','p2ServerID','p3ServerID','p4ServerID','p5ServerID','p6ServerID'].forEach(id => {
+        ['p1ServerID', 'p2ServerID', 'p3ServerID', 'p4ServerID', 'p5ServerID', 'p6ServerID'].forEach(id => {
             const el = document.getElementById(id);
             if (!el) return;
-            el.addEventListener('input', () => { const c = el.value.replace(/[^0-9]/g,''); if (el.value !== c) el.value = c; });
+            el.addEventListener('input', () => { const c = el.value.replace(/[^0-9]/g, ''); if (el.value !== c) el.value = c; });
             el.addEventListener('keypress', (e) => { if (!/[0-9]/.test(e.key)) e.preventDefault(); });
         });
 
@@ -397,15 +387,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const gameSelected = document.querySelector('input[name="game_selected"]:checked').value;
 
-            // --- CHARACTER ID / SERVER ID VALIDATION ---
-            // BGMI & MLBB: CharID must be numeric
-            const reqCharIDs = ['p1CharID','p2CharID','p3CharID','p4CharID'];
-            if (gameSelected !== 'BGMI') reqCharIDs.push('p5CharID');
-            for (const cid of reqCharIDs) {
-                const val = document.getElementById(cid).value.trim();
-                if (val && !/^[0-9]+$/.test(val)) {
-                    showToast(`Character ID must be numbers only! (Player ${cid.replace('p','').replace('CharID','')})`, true);
-                    document.getElementById(cid).focus(); return;
+            // --- CHARACTER ID / TAGLINE / SERVER ID VALIDATION ---
+            if (gameSelected === 'Valorant') {
+                // Tagline: alphanumeric — just check not empty (HTML required handles it)
+            } else {
+                // BGMI & MLBB: CharID must be numeric
+                const reqCharIDs = ['p1CharID', 'p2CharID', 'p3CharID', 'p4CharID'];
+                if (gameSelected !== 'BGMI') reqCharIDs.push('p5CharID');
+                for (const cid of reqCharIDs) {
+                    const val = document.getElementById(cid).value.trim();
+                    if (val && !/^[0-9]+$/.test(val)) {
+                        showToast(`Character ID must be numbers only! (Player ${cid.replace('p', '').replace('CharID', '')})`, true);
+                        document.getElementById(cid).focus(); return;
+                    }
                 }
             }
             if (gameSelected === 'MLBB') {
@@ -420,7 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // --- SUBSTITUTE PLAYER ALL-OR-NOTHING VALIDATION ---
             const subPrefix = gameSelected === 'BGMI' ? 'p5' : 'p6';
             const subName = document.getElementById(subPrefix + 'Name').value.trim();
-            const subIGN  = document.getElementById(subPrefix + 'IGN').value.trim();
+            const subIGN = document.getElementById(subPrefix + 'IGN').value.trim();
             const subChar = document.getElementById(subPrefix + 'CharID').value.trim();
             const subFile = document.getElementById(subPrefix + 'CollegeID').files?.length > 0;
             const subServerID = gameSelected === 'MLBB' ? (document.getElementById(subPrefix + 'ServerID')?.value.trim() || '') : 'ok';
@@ -440,7 +434,7 @@ document.addEventListener('DOMContentLoaded', () => {
             for (const { id, label } of idInputs) {
                 const el = document.getElementById(id);
                 if (el && el.files[0] && el.files[0].size > MAX_FILE_SIZE) {
-                    showToast(`${label} College ID too large! Max 250KB. File: ${(el.files[0].size/1024).toFixed(1)}KB.`, true);
+                    showToast(`${label} College ID too large! Max 250KB. File: ${(el.files[0].size / 1024).toFixed(1)}KB.`, true);
                     return;
                 }
             }
@@ -491,27 +485,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 const urls = [p1url, p2url, p3url, p4url, p5url, p6url];
 
                 const payload = {
-                    college_name:    document.getElementById('collegeName').value.trim(),
-                    team_name:       document.getElementById('teamName').value.trim(),
-                    department:      document.getElementById('courseDept').value.trim(),
-                    captain_name:    document.getElementById('captainName').value.trim(),
-                    leader_email:    document.getElementById('leaderEmail').value.trim(),
+                    college_name: document.getElementById('collegeName').value.trim(),
+                    team_name: document.getElementById('teamName').value.trim(),
+                    department: document.getElementById('courseDept').value.trim(),
+                    captain_name: document.getElementById('captainName').value.trim(),
+                    leader_email: document.getElementById('leaderEmail').value.trim(),
                     leader_whatsapp: document.getElementById('leaderWhatsapp').value.trim(),
                 };
 
                 // BGMI has max 5 players (P1-P4 required + P5 substitute)
-                // MLBB has max 6 players (P1-P5 required + P6 substitute)
+                // Valorant & MLBB have max 6 players (P1-P5 required + P6 substitute)
                 const maxPlayers = gameSelected === 'BGMI' ? 5 : 6;
 
                 for (let n = 1; n <= maxPlayers; n++) {
-                    payload[`p${n}_name`]       = getV(`p${n}Name`);
-                    payload[`p${n}_ign`]        = getV(`p${n}IGN`);
+                    payload[`p${n}_name`] = getV(`p${n}Name`);
+                    payload[`p${n}_ign`] = getV(`p${n}IGN`);
                     payload[`p${n}_college_id`] = urls[n - 1];
-                    payload[`p${n}_char_id`]  = getV(`p${n}CharID`);
-                    if (gameSelected === 'MLBB') payload[`p${n}_server_id`] = getV(`p${n}ServerID`);
+                    if (gameSelected === 'Valorant') {
+                        payload[`p${n}_tagline`] = getV(`p${n}CharID`);
+                    } else {
+                        payload[`p${n}_char_id`] = getV(`p${n}CharID`);
+                        if (gameSelected === 'MLBB') payload[`p${n}_server_id`] = getV(`p${n}ServerID`);
+                    }
                 }
 
-                const tableMap = { BGMI: 'bgmi_registrations', MLBB: 'moba_registrations' };
+                const tableMap = { BGMI: 'bgmi_registrations', Valorant: 'valorant_registrations', MLBB: 'moba_registrations' };
                 console.log(`Submitting to ${tableMap[gameSelected]}:`, payload);
 
                 const { data, error } = await supabaseClient
@@ -569,6 +567,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let gameColor = "";
         if (game === 'BGMI') gameColor = '#f59e0b';
+        if (game === 'Valorant') gameColor = '#ff2a54';
         if (game === 'MLBB') gameColor = '#3b82f6';
 
         gameTag.innerText = `REGISTERED FOR ${game.toUpperCase()}`;
