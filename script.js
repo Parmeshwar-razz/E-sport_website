@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     /* --- GLOBALS & UTILS --- */
     const isRegPage = document.body.classList.contains('reg-page');
 
-    // GLOBAL REGISTRATION DEADLINE (5th May 2026, 11:59 PM IST)
-    const REG_DEADLINE = new Date('2026-05-05T23:59:00+05:30').getTime();
+    // GLOBAL REGISTRATION DEADLINE (6th May 2026, 12:00 PM IST)
+    const REG_DEADLINE = new Date('2026-05-06T12:00:00+05:30').getTime();
 
     // If on register page and deadline has passed, kick them out
     if (isRegPage && Date.now() > REG_DEADLINE) {
